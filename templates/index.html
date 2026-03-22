@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tecDigital – Iniciar Sesión</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- Left: artwork -->
+    <div class="artwork">
+      <img src="{{ url_for('static', filename='img/hero.svg') }}" alt="Ilustración tecDigital" />
+    </div>
+
+    <!-- Right: form -->
+    <div class="panel">
+
+      <!-- Mobile-only logo (artwork hidden on small screens) -->
+      <div>
+        <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo tecDigital" class="mobile-logo"/>
+      </div>
+
+      <h1>Iniciar Sesión</h1>
+
+      <!-- Info banner -->
+      <div class="info-banner">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span>
+          Si sos estudiante de primer ingreso y aún no has completado la boleta de perfil de ingreso 2026,
+          podés hacerlo desde <a href="#">aquí</a>
+        </span>
+      </div>
+
+      <!-- Flash messages from Flask -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <!-- Login form -->
+      <form method="POST" action="{{ url_for('login') }}" novalidate>
+        {# WTForms CSRF token — not using WTForms #}
+
+        <div class="fields">
+
+          <!-- Email -->
+          <div class="field">
+            <label for="email">Dirección de correo electrónico <span class="req">*</span></label>
+            <div class="input-wrap">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Ej: juanperez@estudiantec.cr / @itcr.ac.cr""
+                value=""
+                autocomplete="email"
+                oninput="validateForm()"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="field">
+            <label for="password">Contraseña <span class="req">*</span></label>
+            <div class="input-wrap">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                oninput="validateForm()"
+                required
+              />
+              <button type="button" class="toggle-pw" aria-label="Mostrar/ocultar contraseña" onclick="togglePassword()">
+                <img id="eye-icon" src="{{ url_for('static', filename='closed_eye.svg') }}" alt="Toggle password" width="20" height="20" />
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn-login" id="btn-login" disabled>Iniciar Sesión</button>
+      </form>
+
+      <div class="help">
+        <a href="#">¿Tiene problemas para acceder?</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <p class="footer">
+    * Este sitio es protegido por recaptcha
+    <a href="#">Privacidad</a> y <a href="#">Condiciones</a> <small class="TD_Version">VTD.2</small>
+  </p>
+
+  <script>
+    function validateForm() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const btn = document.getElementById('btn-login');
+      
+      // Enable button only if both fields have values
+      btn.disabled = !email || !password;
+    }
+
+    function togglePassword() {
+      const pw   = document.getElementById('password');
+      const icon = document.getElementById('eye-icon');
+      const show = pw.type === 'password';
+      pw.type = show ? 'text' : 'password';
+
+      // Swap between eye and eye-off icons
+      icon.src = show 
+        ? "{{ url_for('static', filename='eye.svg') }}"
+        : "{{ url_for('static', filename='closed_eye.svg') }}";
+    }
+
+    // Initialize button state on page load
+    document.addEventListener('DOMContentLoaded', validateForm);
+  </script>
+
+</body>
+</html>
