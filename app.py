@@ -29,13 +29,10 @@ class User(db.Model):
         self.password = password
 
     def set_email(self, email):
-        """Set email"""
         self.email = email.strip().lower()
 
     def set_created_at(self, created_at):
-        """Set created_at timestamp"""
         self.created_at = created_at
-    
     
     def __repr__(self):
         return f'<User {self.email}>'
@@ -66,20 +63,17 @@ def login():
     user.email = email
     user.created_at = db.func.now()
 
-    # Add to session and commit
+    # # Add to session and commit
     db.session.add(user)
     db.session.commit()
     return redirect("https://tecdigital.tec.ac.cr/dotlrn")
 
 
-@app.route("/dashboard")
-def dashboard():
-    """Protected route - user must be logged in"""
-    if "user_email" not in session:
-        flash("Debes iniciar sesión primero", "error")
-        return redirect(url_for("home"))
+@app.route("/ayuda")
+def ayuda():
+    """Cuando el usuario no tiene acceso a la cuenta"""
     
-    return f"Bienvenido, {session['user_email']}!"
+    return f"Este es una prueba de phishing! Si no ingresaste datos comprometedores, estás a salvo"
 
 @app.route("/logout")
 def logout():
@@ -88,10 +82,6 @@ def logout():
     flash("Sesión cerrada correctamente", "success")
     return redirect(url_for("home"))
 
-@app.shell_context_processor
-def make_shell_context():
-    """Make db available in flask shell"""
-    return {'db': db, 'User': User}
 
 if __name__ == "__main__":
     # Create tables if they don't exist

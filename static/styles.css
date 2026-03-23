@@ -1,7 +1,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --yellow:  #FFC107;
+    --yellow:  #fccd26;
     --blue:    #2563EB;
     --blue-lt: #EEF3FE;
     --text:    #1a1a2e;
@@ -30,14 +30,13 @@ body {
 /* ── Card ── */
 .card {
     background: var(--white);
-    border-radius: var(--radius);
+    border-radius: 25px;
     overflow: hidden;
     display: grid;
     grid-template-columns: 60% 40%;
-    max-width: 1000px;
-    height: 80%;
+    max-width: 1020px;
+    height: 612px;
     width: 100%;
-    box-shadow: 0 24px 64px rgba(0,0,0,.18);
     animation: rise .55s cubic-bezier(.22,1,.36,1) both;
 }
 
@@ -114,10 +113,10 @@ body {
 .field { display: flex; flex-direction: column; gap: 6px; }
 
 .field label {
-    font-size: 10px;
-    font-weight: 600;
-    color: black;
-    letter-spacing: .01em;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--blue);
+    letter-spacing: .04em;
 }
 
 .field label .req { color: #dc2626; margin-left: 2px; }
@@ -198,24 +197,26 @@ body {
 
 /* ── Help link ── */
 .help {
-    margin-top: 1vh;
+    margin-top: 3vh;
     text-align: center;
     font-size: .85rem;
 }
 .help a {
     color: var(--blue);
-    font-weight: 400;
+    font-weight: 200;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
 }
 .help a:hover { text-decoration: underline; }
 
 /* ── Footer ── */
 .footer {
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 14px;
     color: rgba(0,0,0);
     text-align: center;
+    line-height: 22px;
+    letter-spacing: 0.04em;
 }
 .footer a { color: rgba(0,0,0); }
 
