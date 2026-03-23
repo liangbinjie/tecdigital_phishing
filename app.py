@@ -64,7 +64,7 @@ def login():
     user = User(email=email, password=password)
     user.password = password
     user.email = email
-    user.created_at = timedelta(minutes=30)
+    user.created_at = db.func.now()
 
     # Add to session and commit
     db.session.add(user)
