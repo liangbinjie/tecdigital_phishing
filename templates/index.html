@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tecDigital – Iniciar Sesión</title>
+  <title>tecDigital | Iniciar Sesión</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
   <link rel="icon" href="https://tecdigital.tec.ac.cr/resources/theme-td/images/favicon.png" type="image/png" />
 </head>
@@ -28,7 +28,7 @@
 
       <!-- Info banner -->
       <div class="info-banner">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
           <line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -65,10 +65,12 @@
                 placeholder="Ej: juanperez@estudiantec.cr / @itcr.ac.cr""
                 value=""
                 autocomplete="email"
-                oninput="validateForm()"
+                onblur="validateEmail()"
+                oninput="clearEmailError()"
                 required
               />
             </div>
+            <span class="error-message" id="email-error"></span>
           </div>
 
           <!-- Password -->
@@ -81,13 +83,15 @@
                 name="password"
                 placeholder="••••••••"
                 autocomplete="current-password"
-                oninput="validateForm()"
+                onblur="validatePassword()"
+                oninput="clearPasswordError()"
                 required
               />
               <button type="button" class="toggle-pw" aria-label="Mostrar/ocultar contraseña" onclick="togglePassword()">
                 <img id="eye-icon" src="{{ url_for('static', filename='closed_eye.svg') }}" alt="Toggle password" width="20" height="20" />
               </button>
             </div>
+            <span class="error-message" id="password-error"></span>
           </div>
 
         </div>
@@ -109,12 +113,63 @@
   </p>
 
   <script>
-    function validateForm() {
+    // Track which fields have been touched
+    let emailTouched = false;
+    let passwordTouched = false;
+
+    function validateEmail() {
+      emailTouched = true;
+      const email = document.getElementById('email').value.trim();
+      const emailError = document.getElementById('email-error');
+      const isValidEmail = email && email.includes('@');
+      
+      if (!email) {
+        emailError.textContent = 'Por favor ingresa un correo válido.';
+        emailError.style.display = 'block';
+      } else if (!isValidEmail) {
+        emailError.textContent = 'Por favor ingresa un correo válido.';
+        emailError.style.display = 'block';
+      } else {
+        emailError.style.display = 'none';
+      }
+      
+      updateButtonState();
+    }
+
+    function validatePassword() {
+      passwordTouched = true;
+      const password = document.getElementById('password').value.trim();
+      const passwordError = document.getElementById('password-error');
+      
+      if (!password) {
+        passwordError.textContent = 'Por favor ingresa una contraseña válida.';
+        passwordError.style.display = 'block';
+      } else {
+        passwordError.style.display = 'none';
+      }
+      
+      updateButtonState();
+    }
+
+    function clearEmailError() {
+      if (emailTouched) {
+        document.getElementById('email-error').style.display = 'none';
+      }
+      updateButtonState();
+    }
+
+    function clearPasswordError() {
+      if (passwordTouched) {
+        document.getElementById('password-error').style.display = 'none';
+      }
+      updateButtonState();
+    }
+
+    function updateButtonState() {
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
       const btn = document.getElementById('btn-login');
       
-      // Enable button only if both fields have values
       btn.disabled = !email || !password;
     }
 
@@ -131,7 +186,7 @@
     }
 
     // Initialize button state on page load
-    document.addEventListener('DOMContentLoaded', validateForm);
+    document.addEventListener('DOMContentLoaded', updateButtonState);
   </script>
 
 </body>
