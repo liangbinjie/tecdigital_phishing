@@ -220,6 +220,10 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
+    html, body {
+        background-color: white;
+    }
+
     body {
         padding: 0;
         min-height: 100vh;
@@ -263,6 +267,7 @@ body {
         background: var(--white);
         padding: 16px 24px;
         margin: 0;
+        font-size: 15px
     }
 }
 
