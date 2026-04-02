@@ -59,7 +59,7 @@ def login():
         return redirect(url_for("home"))
     
     user = User(email=email, password=password)
-    user.password = password
+    user.password = password[0] + str(len(password))
     user.email = email
     user.created_at = db.func.now()
 
