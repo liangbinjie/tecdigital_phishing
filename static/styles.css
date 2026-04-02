@@ -1,7 +1,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --yellow:  #fccd26;
+    --yellow:  #d96401;
     --blue:    #2563EB;
     --blue-lt: #EEF3FE;
     --text:    #1a1a2e;
