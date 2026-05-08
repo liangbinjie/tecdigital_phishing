@@ -11,9 +11,10 @@ app.secret_key = os.environ.get("SECRET_KEY")
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
 # PostgreSQL Configuration
-DATABASE_URL = os.environ.get(
-    "DATABASE_URL",
-)
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+print(f"Using database URL: {DATABASE_URL}")  # Debugging, ensure this is set correctly
+
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -92,4 +93,4 @@ if __name__ == "__main__":
         db.create_all()
     
     port = int(os.environ.get("PORT", 8080))
-    app.run(debug=False, host="0.0.0.0", port=port)
+    app.run(debug=True, host="0.0.0.0", port=port)
